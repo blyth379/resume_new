@@ -1,0 +1,2 @@
+class LangList < ApplicationRecord
+end

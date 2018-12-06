@@ -1,0 +1,2 @@
+class IndustryList < ApplicationRecord
+end
