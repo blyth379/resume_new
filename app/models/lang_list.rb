@@ -1,3 +1,3 @@
 class LangList < ApplicationRecord
-  has_many :lang, dependent: :destroy
+  has_many :langs, dependent: :destroy
 end

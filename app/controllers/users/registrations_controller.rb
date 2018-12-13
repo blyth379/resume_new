@@ -18,32 +18,53 @@ class Users::RegistrationsController < Devise::RegistrationsController
   def edit
     @user = User.new
     @education = Education.new
+    @countrylists = CountryList.all.order(country: :asc)
     @langlists = LangList.all.order(lang: :asc)
+    
+    # logger.debug("~=~=~=~=~=~=~=~=~=~= user.id = #{params[:user][:id]}")
     @industrylists = IndustryList.all.order(industry: :asc)
     @jobcategory_lists = JobCategoryList.all.order(job_category: :asc)
   end
 
   # PUT /resource
   def update
-    logger.debug("~=~=~=~=~=~=~=~=~=~= user.id = #{params[:user][:id]}")
-    @user = User.find_by(id: params[:user][:id])
-    @user.first_name = params[:user][:first_name]
-    @user.family_name = params[:user][:family_name]
-    @user.middle_name = params[:user][:middle_name]
-    @user.gender = params[:user][:gender]
-    @user.nationality = params[:user][:nationality]
-    @user.residence_country = params[:user][:residence_country]
-    @user.hobby = params[:user][:hobby]
+        logger.debug("~=~=~=~=~=~=~=~=~=~= user.id = #{params[:user][:id]}")
+
+    @user = User.find(params[:user][:id])
+    if @user.update_attributes(configure_account_update_params)
+      redirect_to root_path
+    else
+      redirect_back(fallback_location: root_path)
+  	 end
+    # logger.debug("~=~=~=~=~=~=~=~=~=~= user.id = #{params[:user][:id]}")
+    # @user = User.find_by(id: params[:user][:id])
+    # @user.first_name = params[:user][:first_name]
+    # @user.family_name = params[:user][:family_name]
+    # @user.middle_name = params[:user][:middle_name]
+    # @user.gender = params[:user][:gender]
+    # @user.nationality = params[:user][:nationality]
+    # @user.residence_country = params[:user][:residence_country]
+    # @user.hobby = params[:user][:hobby]
     
-      Education.user_id == @user.id
-      @education = Education.find(user_id: @user.id)
-      @education.education_type = params[:education_type]
-      @education.school_name = params[:school_name]
-      @education.enroll_in = params[:enroll_in]
-      @education.graduate_in = params[:graduate_in]
+    # logger.debug("===================== education_type = #{params[:user][:education_attributes][0][:school_name]}")
     
-      @education.save
+    # if @user.save
+      # params[:user][:education_attributes].each do |education|
+      #   logger.debug("===================== education_type = #{params[:user][:education_attributes]}")
+      #     @education = Education.create(
+      #                               user_id: @user.id,
+      #                               education_type: education.education_type,
+      #                               school_name: education.school_name,
+      #                               enroll_in: education.enroll_in,
+      #                               graduate_in: education.graduate_in
+      #                               )
+      # end
+    # else
+    #   flash[:notice] = "保存できませんでした"
+    #   render edit_user_registration_path
+    # end
       
+    
 		
 	 #if params[:image]
 	 #  @user.image_name = "#{@user.id}.jpg"
@@ -51,12 +72,12 @@ class Users::RegistrationsController < Devise::RegistrationsController
 	 #  File.binwrite("public/user_images/#{@user.image_name}", image.read)
 	 #end
 		
-  	 if @user.save
-  	   flash[:notice] = "ユーザー情報を編集しました"
-  	   redirect_to :root
-  	 else
-  	   redirect_back(fallback_location: root_path)
-  	 end
+  	 #if @user.save
+  	 #  flash[:notice] = "ユーザー情報を編集しました"
+  	 #  redirect_to :root
+  	 #else
+  	 #  redirect_back(fallback_location: root_path)
+  	 #end
   end
     
   	 
@@ -90,8 +111,14 @@ class Users::RegistrationsController < Devise::RegistrationsController
   end
   
   def configure_account_update_params
-    devise_parameter_sanitizer.permit(:account_update, keys: [:first_name, :family_name, :middle_name, :gender, :nationality, :residence_country, :hobby])
+    # devise_parameter_sanitizer.permit(:account_update, keys: [:first_name, :family_name, :middle_name, :gender, :nationality, :residence_country, :hobby],
+    # education_attributes: [:id, :user_id, :education_type, :school_name, :enroll_in, :graduate_in, :destroy])
+    params.require(:user).permit(:first_name, :family_name, :middle_name, :gender, :nationality, :residence_country, :hobby,
+    education_attributes: [:id, :user_id, :education_type, :school_name, :enroll_in, :graduate_in, :destroy])
+
   end
+  
+
 
 
   # If you have extra params to permit, append them to the sanitizer.
