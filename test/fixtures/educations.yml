@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  education_type: MyString
+  school_name: MyString
+  enroll_in: 
+  user: one
+
+two:
+  education_type: MyString
+  school_name: MyString
+  enroll_in: 
+  user: two

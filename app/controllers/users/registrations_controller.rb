@@ -17,7 +17,10 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # GET /resource/edit
   def edit
     @user = User.new
+    @education = Education.new
     @langlists = LangList.all.order(lang: :asc)
+    @industrylists = IndustryList.all.order(industry: :asc)
+    @jobcategory_lists = JobCategoryList.all.order(job_category: :asc)
   end
 
   # PUT /resource
@@ -31,6 +34,16 @@ class Users::RegistrationsController < Devise::RegistrationsController
     @user.nationality = params[:user][:nationality]
     @user.residence_country = params[:user][:residence_country]
     @user.hobby = params[:user][:hobby]
+    
+      Education.user_id == @user.id
+      @education = Education.find(user_id: @user.id)
+      @education.education_type = params[:education_type]
+      @education.school_name = params[:school_name]
+      @education.enroll_in = params[:enroll_in]
+      @education.graduate_in = params[:graduate_in]
+    
+      @education.save
+      
 		
 	 #if params[:image]
 	 #  @user.image_name = "#{@user.id}.jpg"
@@ -77,11 +90,8 @@ class Users::RegistrationsController < Devise::RegistrationsController
   end
   
   def configure_account_update_params
-    devise_parameter_sanitizer.permit(:account_update, keys: [:first_name, :family_name, :middle_name, :gender, :nationality, :residence_country, :hobby
-])
+    devise_parameter_sanitizer.permit(:account_update, keys: [:first_name, :family_name, :middle_name, :gender, :nationality, :residence_country, :hobby])
   end
-
-
 
 
   # If you have extra params to permit, append them to the sanitizer.

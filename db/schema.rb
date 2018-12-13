@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_12_02_040936) do
+ActiveRecord::Schema.define(version: 2018_12_12_183102) do
 
   create_table "companies", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -29,6 +29,51 @@ ActiveRecord::Schema.define(version: 2018_12_02_040936) do
     t.datetime "updated_at", null: false
     t.index ["email"], name: "index_companies_on_email", unique: true
     t.index ["reset_password_token"], name: "index_companies_on_reset_password_token", unique: true
+  end
+
+  create_table "company_countries", force: :cascade do |t|
+    t.integer "company_id"
+    t.integer "country_list_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["company_id"], name: "index_company_countries_on_company_id"
+    t.index ["country_list_id"], name: "index_company_countries_on_country_list_id"
+  end
+
+  create_table "company_industries", force: :cascade do |t|
+    t.integer "company_id"
+    t.integer "industry_list_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["company_id"], name: "index_company_industries_on_company_id"
+    t.index ["industry_list_id"], name: "index_company_industries_on_industry_list_id"
+  end
+
+  create_table "company_job_categories", force: :cascade do |t|
+    t.integer "company_id"
+    t.integer "job_category_list_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["company_id"], name: "index_company_job_categories_on_company_id"
+    t.index ["job_category_list_id"], name: "index_company_job_categories_on_job_category_list_id"
+  end
+
+  create_table "country_lists", force: :cascade do |t|
+    t.string "country"
+    t.string "country_jp"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "educations", force: :cascade do |t|
+    t.string "education_type"
+    t.string "school_name"
+    t.date "enroll_in"
+    t.date "graduate_in"
+    t.integer "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_educations_on_user_id"
   end
 
   create_table "industry_lists", force: :cascade do |t|
@@ -59,6 +104,33 @@ ActiveRecord::Schema.define(version: 2018_12_02_040936) do
     t.datetime "updated_at", null: false
     t.index ["lang_list_id"], name: "index_langs_on_lang_list_id"
     t.index ["user_id"], name: "index_langs_on_user_id"
+  end
+
+  create_table "user_countries", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "country_list_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["country_list_id"], name: "index_user_countries_on_country_list_id"
+    t.index ["user_id"], name: "index_user_countries_on_user_id"
+  end
+
+  create_table "user_industries", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "industry_list_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["industry_list_id"], name: "index_user_industries_on_industry_list_id"
+    t.index ["user_id"], name: "index_user_industries_on_user_id"
+  end
+
+  create_table "user_job_categories", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "job_category_list_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["job_category_list_id"], name: "index_user_job_categories_on_job_category_list_id"
+    t.index ["user_id"], name: "index_user_job_categories_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|

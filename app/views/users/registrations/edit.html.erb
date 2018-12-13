@@ -7,12 +7,14 @@
   <%= hidden_field :user, :id %>
 
   <div class="field">
-    <%= f.label :first_name %><br />
-    <%= f.text_field :first_name, autofocus: true, autocomplete: "given-name" %>
+    <%= f.label :first_name %>*<br />
+    <%= f.text_field :first_name, autofocus: true, autocomplete: "given-name", required: true %>
+  </div>
   
   <div class="field">
-    <%= f.label :family_name %><br />
-    <%= f.text_field :family_name, autofocus: true, autocomplete: "family-name" %>
+    <%= f.label :family_name %>*<br />
+    <%= f.text_field :family_name, autofocus: true, autocomplete: "family-name", required: true %>
+  </div>
 
   <div class="field">
     <%= f.label :middle_name %><br />
@@ -20,13 +22,13 @@
   </div>
 
   <div class="field">
-    <%= f.label :gender %><br />
-    <%= f.select :gender, ["F", "M", "O"], autofocus: true %>
+    <%= f.label :gender %>*<br />
+    <%= f.select :gender, ["F", "M", "O"], autofocus: true, required: true %>
   </div>
 
   <div class="field">
-    <%= f.label :nationality %><br />
-    <%= f.country_select :nationality, autofocus: true %>
+    <%= f.label :nationality %>*<br />
+    <%= f.country_select :nationality, autofocus: true, required: true %>
   </div>
 
   <div class="field">
@@ -39,13 +41,57 @@
     <%= f.text_area :hobby, autofocus: true %>
   </div>
   
+  
+  
   <div class="select_box">
-    <select id='langlists' name='user[langlist]' multiple size="5">
+    <select id='industry_list' name='user[industry_list]' multiple size="5">
+      <%= @industrylists.each do |i| %>
+        <option value="<%= i.id %>"><%= i.industry %></option>
+      <% end %>
+    </select>
+  </div>
+  
+  
+  
+  <div class="select_box">
+    <select id='job_category_list' name='user[job_category_list]' multiple size="5">
+      <%= @jobcategory_lists.each do |i| %>
+        <option value="<%= i.id %>"><%= i.job_category %></option>
+      <% end %>
+    </select>
+  </div>
+  
+  
+  <div class="select_box">
+    <select id='lang_list' name='user[lang_list]' multiple size="5">
       <%= @langlists.each do |l| %>
         <option value="<%= l.id %>"><%= l.lang %></option>
       <% end %>
     </select>
   </div>
+  
+  <%= fields_for(@user) do |f| %>
+...
+  <table class="table table-striped table-bordered table-hover">
+          <tbody>
+            <tr>
+               <th>education_type</th>
+               <th>school name</th>
+               <th>enroll in</th>
+               <th>graduate in</th>
+            </tr>
+            <%= f.nested_fields_for :education, wrapper_tag: :tr do |q| %>
+                <td><%= q.select :education_type, ["E","J", "H", "U"] %></td>
+                <td><%= q.text_field :school_name %></td>
+                <td><%= q.date_field :enroll_in %></td>
+                <td><%= q.date_field :graduate_in %></td>
+                <td><%= q.remove_nested_fields_link 'Delete' %></td>
+            <% end %>
+        </tbody>
+      </table>
+      <%= f.add_nested_fields_link :education, 'Add new' %>
+...
+<% end %>
  
   
 
