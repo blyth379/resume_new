@@ -7,6 +7,12 @@ gem 'devise'
 gem 'nested_form_fields'
 gem 'jquery-rails'
 
+gem 'therubyracer'
+gem 'less-rails'
+gem 'twitter-bootstrap-rails'
+gem 'sprockets', '3.6.3'
+gem 'execjs'
+
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.2.1'
 # Use sqlite3 as the database for Active Record

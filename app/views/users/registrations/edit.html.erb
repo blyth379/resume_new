@@ -33,16 +33,28 @@
   </div>
   
   
-  
+  111
   <div class="select_box">
-    <select id='industry_list' name='user[industry_list]' multiple size="5">
+    <%= f.label :nationality %><br />
+    <select id='country_list' name='user[country_list]' multiple size="5">
+      <%= @countrylists.each do |c| %>
+        <option value="<%= c.id %>"><%= c.country %></option>
+      <% end %>
+    </select>
+  </div>
+  1111
+  <div class="select_box">
+    <%= f.label :residence_country %><br />
+    <select id='country_list' name='user[country_list]' multiple size="5">
       <%= @countrylists.each do |c| %>
         <option value="<%= c.id %>"><%= c.country %></option>
       <% end %>
     </select>
   </div>
   
+  
   <div class="select_box">
+    <%= f.label :industry %><br />
     <select id='industry_list' name='user[industry_list]' multiple size="5">
       <%= @industrylists.each do |i| %>
         <option value="<%= i.id %>"><%= i.industry %></option>
@@ -51,8 +63,8 @@
   </div>
   
   
-  
   <div class="select_box">
+    <%= f.label :job_category %><br />
     <select id='job_category_list' name='user[job_category_list]' multiple size="5">
       <%= @jobcategory_lists.each do |i| %>
         <option value="<%= i.id %>"><%= i.job_category %></option>
@@ -62,16 +74,16 @@
   
   
   <div class="select_box">
+    <%= f.label :language %><br />
     <select id='lang_list' name='user[lang_list]' multiple size="5">
       <%= @langlists.each do |l| %>
-      <% logger.debug("-----------------------> l.lang= #{l.lang}") %>
         <option value="<%= l.id %>"><%= l.lang %></option>
       <% end %>
     </select>
   </div>
   
+  
   <%= fields_for(@user) do |f| %>
-...
   <table class="table table-striped table-bordered table-hover">
         <tbody>
             <tr>

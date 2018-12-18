@@ -21,7 +21,6 @@ class Users::RegistrationsController < Devise::RegistrationsController
     @countrylists = CountryList.all.order(country: :asc)
     @langlists = LangList.all.order(lang: :asc)
     
-    # logger.debug("~=~=~=~=~=~=~=~=~=~= user.id = #{params[:user][:id]}")
     @industrylists = IndustryList.all.order(industry: :asc)
     @jobcategory_lists = JobCategoryList.all.order(job_category: :asc)
   end
